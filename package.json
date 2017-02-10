@@ -1,0 +1,24 @@
+{
+  "name": "protocoler",
+  "version": "0.0.1",
+  "description": "Utility to parse binary protocols",
+  "main": "protocoler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tiagopadua/protocoler.git"
+  },
+  "keywords": [
+    "binary",
+    "protocol",
+    "parse",
+    "protocoler"
+  ],
+  "author": "Tiago de Pádua",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiagopadua/protocoler/issues"
+  }
+}
