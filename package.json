@@ -1,6 +1,6 @@
 {
   "name": "protocoler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Utility to parse binary protocols",
   "homepage": "https://github.com/tiagopadua/protocoler",
   "author": "Tiago de Pádua <tiagopadua@gmail.com>",
@@ -8,7 +8,6 @@
   "bugs": {
     "url": "https://github.com/tiagopadua/protocoler/issues"
   },
-
   "main": "protocoler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
