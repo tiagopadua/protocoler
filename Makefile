@@ -11,6 +11,6 @@ jshint:
 tests: test
 
 tap:
-	@NODE_ENV=test ./node_modules/.bin/tape > results.tap
+	./node_modules/.bin/tape test/**/*-test.js > results.tap
 
-.PHONY: test tap unit jshint skel
+.PHONY: test tap jshint
