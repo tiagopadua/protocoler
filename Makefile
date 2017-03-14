@@ -3,7 +3,7 @@ REPORTER = spec
 all: jshint test
 
 test:
-	@NODE_ENV=test ./node_modules/.bin/mocha --recursive --reporter $(REPORTER) --timeout 3000
+	./node_modules/.bin/tape test/**/*-test.js | ./node_modules/.bin/tap-spec
 
 jshint:
 	jshint lib examples test index.js
@@ -11,14 +11,6 @@ jshint:
 tests: test
 
 tap:
-	@NODE_ENV=test ./node_modules/.bin/mocha -R tap > results.tap
-
-unit:
-	@NODE_ENV=test ./node_modules/.bin/mocha --recursive -R xunit > results.xml --timeout 3000
-
-skel:
-	mkdir examples lib test
-	touch index.js
-	npm install mocha chai --save-dev
+	@NODE_ENV=test ./node_modules/.bin/tape > results.tap
 
 .PHONY: test tap unit jshint skel
