@@ -4,12 +4,14 @@ let HexString = require('../lib/hex-string.js');
 
 tape('Create a new HexString object with several inputs', test => {
 
-    test.throws(() => { new HexString(); }, /Error:.+/i, 'Constructor should throw an error if no parameter is passed');
-    test.throws(() => { new HexString(1); }, /Error:.+/i, 'Constructor should throw an error if a number is passed on the constructor');
-    test.throws(() => { new HexString([]); }, /Error:.+/i, 'Constructor should throw an error if an array is passed on the constructor');
-    test.throws(() => { new HexString({}); }, /Error:.+/i, 'Constructor should throw an error if a dictionary is passed on the constructor');
-    test.throws(() => { new HexString(''); }, /Error:.+/i, 'Constructor should throw an error if an EMPTY string is passed on the constructor');
-    test.throws(() => { new HexString('kkkkkkkk'); }, /Error:.+/i, 'Constructor should throw an error if an invalid hex string is passed on the constructor');
+    let hexErrorRegex = /^HexError: .+/;
+
+    test.throws(() => { new HexString(); }, hexErrorRegex, 'Constructor should throw an error if no parameter is passed');
+    test.throws(() => { new HexString(1); }, hexErrorRegex, 'Constructor should throw an error if a number is passed on the constructor');
+    test.throws(() => { new HexString([]); }, hexErrorRegex, 'Constructor should throw an error if an array is passed on the constructor');
+    test.throws(() => { new HexString({}); }, hexErrorRegex, 'Constructor should throw an error if a dictionary is passed on the constructor');
+    test.throws(() => { new HexString(''); }, hexErrorRegex, 'Constructor should throw an error if an EMPTY string is passed on the constructor');
+    test.throws(() => { new HexString('kkkkkkkk'); }, hexErrorRegex, 'Constructor should throw an error if an invalid hex string is passed on the constructor');
 
     test.doesNotThrow(() => { new HexString('abcdef'); }, 'Should accept lowercase a-f');
     test.doesNotThrow(() => { new HexString('ABCDEF'); }, 'Should accept uppercase A-F');
