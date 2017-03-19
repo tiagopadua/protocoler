@@ -6,36 +6,63 @@ const PROTOCOL_NAME = "Protocol Name";
 const PROTOCOL_VERSION = "1.0";
 const BYTE_ORDER = "BigEndian";
 const REFERENCE = "https://url.for/documentation";
-const FIELD_VERSION_NAME = "Protocol Version";
-const FIELD_VERSION_SIZE = 1;
+const FIELD1_NAME = "Protocol Version";
+const FIELD1_SIZE = 1;
 const VALUE1_DESCRIPTION = "Protocol Version 1";
-const VALUE1_SPEC1_NAME = "Payload Size";
-const VALUE1_SPEC1_SIZE = 2;
-const VALUE1_SPEC2_NAME = "Payload Data";
-const VALUE1_SPEC2_SIZE = "Payload Size";
+const VALUE1_SPEC1_NAME = "Payload";
+const VALUE1_SPEC1_SIZE = 4;
+const VALUE1_SUBVALUE1_DESCRIPTION = "Teste1";
+const VALUE1_SUBVALUE2_DESCRIPTION = "Teste2";
+const VALUE1_SUBVALUE3_DESCRIPTION = "Teste3";
+const VALUE2_DESCRIPTION = "Protocol Version 2";
+const VALUE2_SPEC1_NAME = "Payload Size";
+const VALUE2_SPEC1_SIZE = 2;
+const VALUE2_SPEC2_NAME = "Payload Data";
+const VALUE2_SPEC2_SIZE = VALUE2_SPEC1_NAME;
+const FIELD2_NAME = "Padding";
+const FIELD2_SIZE = 1
 
-TestSpec = {
+let fullSpec = {
     "name": PROTOCOL_NAME,
-    "version": "1.0",
-    "byteOrder": "BigEndian",  // possible values: "LittleEndian" or "BigEndian" (default "BigEndian")
-    "reference": "https://url.for/documentation",
+    "version": PROTOCOL_VERSION,
+    "byteOrder": BYTE_ORDER,
+    "reference": REFERENCE,
     "specList": [{
-        "name": "Protocol Version",
-        "size": 1,  // Bytes
+        "name": FIELD1_NAME,
+        "size": FIELD1_SIZE,
         "values": {
-            // Now list the possible values of this field. For each value, we may specify sub-fields
             "01": {
-                "description": "Protocol Version 1",  // This value could be any string. Just using the version as an example
-                // And here are the children specifications, which follows the same rules. This field is optional
+                "description": VALUE1_DESCRIPTION,
                 "specList": [{
-                    "name": "Payload Size",
-                    "size": 2,  // Again, in Bytes
+                    "name": VALUE1_SPEC1_NAME,
+                    "size": VALUE1_SPEC1_SIZE,
+                    "values": {
+                        "AABBCCDD": {
+                            "description": VALUE1_SUBVALUE1_DESCRIPTION
+                        },
+                        "00112233": {
+                            "description": VALUE1_SUBVALUE2_DESCRIPTION
+                        },
+                        "09090909": {
+                            "description": VALUE1_SUBVALUE3_DESCRIPTION
+                        }
+                    }
+                }]
+            },
+            "02": {
+                "description": VALUE2_DESCRIPTION,
+                "specList": [{
+                    "name": VALUE2_SPEC1_NAME,
+                    "size": VALUE2_SPEC1_SIZE,
                 }, {
-                    "name": "Payload Data",
-                    "size": "Payload Size"  // IMPORTANT: if the size is a string, it is a reference for the value of the object with this name (in the same spec list)
+                    "name": VALUE2_SPEC2_NAME,
+                    "size": VALUE2_SPEC2_SIZE
                 }]
             }
         }
+    }, {
+        "name": FIELD2_NAME,
+        "size": FIELD2_SIZE
     }]
 };
 
@@ -58,6 +85,8 @@ tape('Test the most basic specification', test => {
 });
 
 tape('Test a single specification with all the features available, with several different levels', test => {
-    // A spec full featured
+    let spec = null;
+    test.doesNotThrow(() => { spec = new Specification(fullSpec); }, "Must create spec object without any exceptions");
+
     test.end();
 });
