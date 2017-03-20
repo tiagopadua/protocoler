@@ -20,7 +20,7 @@ const VALUE2_SPEC1_SIZE = 2;
 const VALUE2_SPEC2_NAME = "Payload Data";
 const VALUE2_SPEC2_SIZE = VALUE2_SPEC1_NAME;
 const FIELD2_NAME = "Padding";
-const FIELD2_SIZE = 1
+const FIELD2_SIZE = 1;
 
 let fullSpec = {
     "name": PROTOCOL_NAME,
