@@ -67,7 +67,10 @@ let fullSpec = {
 };
 
 tape('Test the most basic specification', test => {
-    // Only a raw payload with 2 bytes:  0x1234
+    test.plan(3);
+
+    // Only a raw payload with 2 bytes
+    let basicPayload = '0x1234';
     let basicSpec = {
         "name": "Basic Name",
         "version": "1.0",
@@ -77,16 +80,42 @@ tape('Test the most basic specification', test => {
         }]
     };
 
-    let spec = null;
+    test.doesNotThrow(() => {
+        let spec = new Specification(basicSpec);
 
-    test.doesNotThrow(() => { spec = new Specification(basicSpec); }, "Must create spec object without any exceptions");
-
-    test.end();
+        // Register events
+        spec.on('value', (name, value) => {
+            test.equals(name, 'Payload', 'Spec name should be as expected');
+            test.equals(value, '1234', 'Field value should be as expected');
+        });
+        spec.on('error', err => {
+            test.fail('Basic spec should not emit error events');
+        });
+        spec.parseHex(basicPayload);
+    }, "Must create spec object without any exceptions");
 });
 
-tape('Test a single specification with all the features available, with several different levels', test => {
-    let spec = null;
-    test.doesNotThrow(() => { spec = new Specification(fullSpec); }, "Must create spec object without any exceptions");
+tape('Test a single specification with all the features available, in different levels', test => {
+    test.plan(19);
 
-    test.end();
+    test.doesNotThrow(() => {
+        let spec = new Specification(fullSpec);
+        spec.on('value', (name, value) => {
+            test.equals(typeof name, 'string', 'Field name should be a string');
+            test.equals(typeof value, 'string', 'Field value should be a string');
+            console.log(name, value);
+        });
+        spec.on('description', description => {
+            console.log('desc', description);
+            test.equals(typeof description, 'string', 'Description should be a string');
+        });
+        spec.on('error', err => {
+            console.log('err', err);
+            test.equals(typeof err, 'string', 'Error emitted should have a string description');
+        });
+        spec.parseHex('0x01AABBCCDD00');
+        spec.parseHex('0x020001FF00');
+
+        spec.parseHex('0x1');
+    }, "Must create spec object without any exceptions");
 });

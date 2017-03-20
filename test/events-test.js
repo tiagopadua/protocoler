@@ -32,3 +32,30 @@ tape('Add simple listener, receive a single event and remove the listener', test
     test.true(ev.off(eventName, onEvent), 'Should be able to remove listener with result TRUE');
     test.true(ev.emit(eventName, eventParam), 'Function "emit" should return TRUE when emit is successful (even when there are no listeners)');
 });
+
+tape('Inherits a class from EventEmitter', test => {
+    test.plan(2);
+
+    let EVENT_NAME = 'event';
+    let EVENT_VALUE = 12345;
+
+    class InheritedEmitter extends EventEmitter {
+        constructor(input) {
+            super();
+            this._input = input;
+            this._registerEvent(EVENT_NAME);
+        }
+
+        execute() {
+            this.emit(EVENT_NAME, this._input);
+        }
+    }
+
+    test.doesNotThrow(() => {
+        let em = new InheritedEmitter(EVENT_VALUE);
+        em.on(EVENT_NAME, value => {
+            test.equal(value, EVENT_VALUE, 'Event should be triggered with correct value');
+        });
+        em.execute();
+    }, 'Creating an instance of inherited class should not throw exceptions');
+});
