@@ -1,7 +1,7 @@
 # Protocoler
 An utility to parse binary protocols according to a JSON-formatted specification
 
-# Protocol specification
+## Protocol specification
 The protocols are defined by a JSON schema.
 The format of the JSON is as follows:
 ```
@@ -34,10 +34,10 @@ The format of the JSON is as follows:
 }
 ```
 
-# Requirements
+## Requirements
 * ES6
 
-# How to use
+## How to use
 ```
 let capturedSample = '0x1234';  // As example
 let Protocoler = require('protocoler');
@@ -67,6 +67,6 @@ spec.on('error', err => {
 spec.parseHex(capturedSample);
 ```
 
-# Current limitations (TODO's)
+## Current limitations (TODO's)
 * We cannot parse bit-per-bit values yet. Only bytes.
 * Values are currently only supported by hexadecimal values. (Cannot put even a string there, only a hex-representation of its bytes)
